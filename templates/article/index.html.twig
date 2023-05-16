@@ -10,6 +10,7 @@
       <tr>
         <th>Article</th>
         <th>Prix</th>
+        <th>Catégorie</th>
         <th>Actions</th>
       </tr>
       </thead>
@@ -18,6 +19,7 @@
         <tr>
           <td>{{ article.name }}</td>
           <td>{{ article.price }}</td>
+          <td>{{ article.category.title }}</td>
           <td><a href="/article/{{ article.id }}" class="btn btn-info">Détails</a>
             <a href="/article/edit/{{ article.id }}" class="btn btn-warning">Modifier</a>
             <form method="post" action="{{ path('article_delete', {id: article.id}) }}"

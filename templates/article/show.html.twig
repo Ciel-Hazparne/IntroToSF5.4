@@ -4,8 +4,10 @@
 {% block body %}
   <div class="container">
     <h1>{{ article.name }}</h1>
-    <p>{{ article.price }}</p>
     <hr>
+    <p>Prix : {{ article.price }} €</p>
+    <p>Titre : {{ article.category.title }}</p>
+    <p>Description : {{ article.category.description}}</p>
     <a href="/article" class="btn btn-secondary">Retour</a>
   </div>
 {% endblock %}

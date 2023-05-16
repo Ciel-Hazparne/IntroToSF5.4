@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Article;
+use App\Entity\Category;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -21,6 +22,11 @@ class ArticleType extends AbstractType
             ->add('price', TextType::class, [
                 'required' => true,
                 'label' => 'Prix de l\'article'
+            ])
+            ->add('category',EntityType::class,[
+                'class' => Category::class,
+                'choice_label' => 'title',
+                'label' => 'Catégorie'
             ])
         ;
     }
