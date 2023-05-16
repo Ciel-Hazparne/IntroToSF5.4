@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+{% block title %}Modifier Article{% endblock %} {% block body %}
+
+  {{ form_start(form) }}
+  {{ form_widget(form) }}
+  <button type="submit" class="btn btn-success">Modifier</button>
+  <a href="/article" class="btn btn-secondary">Retour</a>
+  {{ form_end(form) }}
+{% endblock %}
