@@ -52,4 +52,13 @@ class ArticleRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
+
+    public function findArticleByName($mot_cle){
+        return $this->createQueryBuilder('a')
+            ->where('a.name like :name')
+            ->setParameter('name', '%'.$mot_cle.'%')
+            ->orderBy('a.name', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }
