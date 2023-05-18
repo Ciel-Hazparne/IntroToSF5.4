@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\CategorySearch;
+use App\Form\CategorySearchType;
 use App\Form\CategoryType;
+use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,12 +24,13 @@ class CategoryController extends AbstractController
             'categories' => $categoryRepository->findAll(),
         ]);
     }
+
     #[Route('/category/new', name: 'category_new', methods: ['GET', 'POST'])]
     public function new(Request $request, CategoryRepository $categoryRepository): RedirectResponse|Response
     {
-        $category  = new Category();
+        $category = new Category();
 
-        $form = $this->createForm(CategoryType::class,$category);
+        $form = $this->createForm(CategoryType::class, $category);
 
         $form->handleRequest($request);
 
@@ -37,6 +41,7 @@ class CategoryController extends AbstractController
         }
         return $this->render('category/new.html.twig', ['form' => $form->createView()]);
     }
+
     #[Route('/category/{id}', name: 'category_show', methods: ['GET'])]
     public function show(Category $category): Response
     {
@@ -46,7 +51,7 @@ class CategoryController extends AbstractController
     #[Route('/category/edit/{id}', name: 'category_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Category $category, CategoryRepository $categoryRepository): RedirectResponse|Response
     {
-        $form = $this->createForm(CategoryType::class,$category);
+        $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $categoryRepository->save($category, true);
@@ -63,5 +68,23 @@ class CategoryController extends AbstractController
         }
 
         return $this->redirectToRoute('article_index');
+    }
+
+    #[Route('/art_cat/', name: 'article_in_cat', methods: ['GET','POST'])]
+    public function articleInCategory(Request $request, ArticleRepository $articleRepository): Response
+    {
+        $categorySearch = new CategorySearch();
+        $form = $this->createForm(CategorySearchType::class, $categorySearch);
+        $form->handleRequest($request);
+        $articles = [];
+        if ($form->isSubmitted() && $form->isValid()) {
+            $category = $categorySearch->getCategory();
+            if ($category !== "") {
+                $articles = $category->getArticles();
+            } else {
+                $articles = $articleRepository->findAll();
+            }
+        }
+        return $this->render('article/articleInCategory.html.twig', ['form' => $form->createView(), 'articles' => $articles]);
     }
 }

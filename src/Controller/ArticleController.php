@@ -3,7 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\ArticleSearch;
+use App\Entity\PriceSearch;
+use App\Form\ArticleSearchType;
 use App\Form\ArticleType;
+use App\Form\PriceSearchType;
 use App\Repository\ArticleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,24 +19,42 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class ArticleController extends AbstractController
 {
-    #[Route('/article', name: 'article_index', methods: ['GET'])]
-    public function index(ArticleRepository $articleRepository): Response
+    #[Route('/article', name: 'article_index', methods: ['GET', 'POST'])]
+    public function index(Request $request, ArticleRepository $articleRepository): Response
     {
-        return $this->render('article/index.html.twig', [
-            'articles' => $articleRepository->findAll(),
-        ]);
+        $article = $articleRepository->findAll();
+
+        $propertySearch = new ArticleSearch();
+        $form = $this->createForm(ArticleSearchType::class, $propertySearch);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            //on récupère le nom d'article tapé dans le formulaire
+            $name = $propertySearch->getName();
+
+            if ($name !== "")  //si on a fourni un nom d'article on affiche tous les articles ayant ce nom
+            {
+                $articleSearch = $articleRepository->findBy(['name' => $name]);
+                return $this->render('article/indexSearch.html.twig', ['articles' => $articleSearch]);
+            } else //si si aucun nom n'est fourni on affiche tous les articles
+            {
+                $article = $articleRepository->findAll();
+            }
+        }
+
+        return $this->render('article/index.html.twig', ['form' => $form->createView(), 'articles' => $article]);
     }
 
     #[Route('/article/new', name: 'article_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ArticleRepository $articleRepository): RedirectResponse|Response
     {
         $article = new Article();
-/*        $form = $this->createFormBuilder($article)
-            ->add('name', TextType::class)
-            ->add('price', TextType::class)
-            ->add('save', SubmitType::class, array('label' => 'Ajouter un article')
-            )->getForm();*/
-        $form = $this->createForm(ArticleType::class,$article);
+        /*        $form = $this->createFormBuilder($article)
+                    ->add('name', TextType::class)
+                    ->add('price', TextType::class)
+                    ->add('save', SubmitType::class, array('label' => 'Ajouter un article')
+                    )->getForm();*/
+        $form = $this->createForm(ArticleType::class, $article);
 
         $form->handleRequest($request);
 
@@ -53,13 +75,13 @@ class ArticleController extends AbstractController
     #[Route('/article/edit/{id}', name: 'article_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Article $article, ArticleRepository $articleRepository): RedirectResponse|Response
     {
-/*        $form = $this->createFormBuilder($article)
-            ->add('name', TextType::class)
-            ->add('price', TextType::class)
-            ->add('save', SubmitType::class, array('label' => 'Modifier'))
-            ->getForm();*/
+        /*        $form = $this->createFormBuilder($article)
+                    ->add('name', TextType::class)
+                    ->add('price', TextType::class)
+                    ->add('save', SubmitType::class, array('label' => 'Modifier'))
+                    ->getForm();*/
 
-        $form = $this->createForm(ArticleType::class,$article);
+        $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $articleRepository->save($article, true);
@@ -76,5 +98,20 @@ class ArticleController extends AbstractController
         }
 
         return $this->redirectToRoute('article_index');
+    }
+
+    #[Route('/art_price/', name: 'article_by_price', methods: ['GET','POST'])]
+    public function articleByPrice(Request $request, ArticleRepository $articleRepository): Response
+    {
+        $priceSearch = new PriceSearch();
+        $form = $this->createForm(PriceSearchType::class, $priceSearch);
+        $form->handleRequest($request);
+        $articles = [];
+        if ($form->isSubmitted() && $form->isValid()) {
+            $minPrice = $priceSearch->getMinPrice();
+            $maxPrice = $priceSearch->getMaxPrice();
+            $articles = $articleRepository->findByPriceRange($minPrice, $maxPrice);
+        }
+        return $this->render('article/articleByPrice.html.twig', ['form' => $form->createView(), 'articles' => $articles]);
     }
 }

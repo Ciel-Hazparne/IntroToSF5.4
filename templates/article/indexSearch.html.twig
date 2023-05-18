@@ -3,16 +3,6 @@
 {% block title %}Liste des Articles{% endblock %}
 
 {% block body %}
-  {{ form_start(form) }}
-  <div class="form-row align-items-end">
-    <div class="col"> {{ form_row(form.name) }} </div>
-    <div class="col">
-      <div class="form-group">
-        <button type="submit" class="btn btn-success">Rechercher</button>
-      </div>
-    </div>
-  </div>
-  {{ form_end(form) }}
   <h1>Articles</h1>
   {% if articles %}
     <table id="articles" class="table table-striped">
@@ -45,4 +35,5 @@
   {% else %}
     <p>Aucun article</p>
   {% endif %}
+  <a href="/article" class="btn btn-secondary">Retour</a>
 {% endblock %}
