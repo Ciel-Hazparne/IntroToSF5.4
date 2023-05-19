@@ -17,6 +17,7 @@
         <tr>
           <td>{{ category.title }}</td>
           <td><a href="/category/{{ category.id }}" class="btn btn-info">Détails</a>
+            {% if is_granted('ROLE_EDITOR') %}
             <a href="/category/edit/{{ category.id }}" class="btn btn-warning">Modifier</a>
             <form method="post" action="{{ path('article_delete', {id: category.id}) }}"
                   style="display: inline-block"
@@ -24,6 +25,7 @@
               <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ category.id) }}">
               <button class="btn btn-danger">Supprimer</button>
             </form>
+            {% endif %}
           </td>
         </tr> {% endfor %}
       </tbody>

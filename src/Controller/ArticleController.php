@@ -9,6 +9,7 @@ use App\Form\ArticleSearchType;
 use App\Form\ArticleType;
 use App\Form\PriceSearchType;
 use App\Repository\ArticleRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -46,6 +47,7 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/article/new', name: 'article_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_EDITOR')]
     public function new(Request $request, ArticleRepository $articleRepository): RedirectResponse|Response
     {
         $article = new Article();
@@ -67,6 +69,7 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/article/{id}', name: 'article_show', methods: ['GET'])]
+    #[IsGranted('ROLE_EDITOR')]
     public function show(Article $article): Response
     {
         return $this->render('article/show.html.twig', array('article' => $article));
@@ -91,6 +94,7 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/article/delete/{id}', name: 'article_delete', methods: ['POST'])]
+    #[IsGranted('ROLE_EDITOR')]
     public function delete(Request $request, Article $article, ArticleRepository $articleRepository): RedirectResponse
     {
         if ($this->isCsrfTokenValid('delete' . $article->getId(), $request->request->get('_token'))) {
