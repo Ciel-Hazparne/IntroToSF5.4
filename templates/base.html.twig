@@ -18,6 +18,16 @@
     <body>
     {{ include('partials/header.html.twig') }}
     <div class="container">
+        {% for label, messages in app.flashes %}
+            <div class="container mt-2">
+                {% for message in messages %}
+                <div class="alert alert-{{ label }}" role="alert">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {{ message | raw }}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
         {% block body %}
         {% endblock %}
     </div>
