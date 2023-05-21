@@ -10,6 +10,7 @@ use App\Form\ArticleType;
 use App\Form\PriceSearchType;
 use App\Repository\ArticleRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -93,17 +94,6 @@ class ArticleController extends AbstractController
         return $this->render('article/edit.html.twig', ['form' => $form->createView()]);
     }
 
-    #[Route('/article/delete/{id}', name: 'article_delete', methods: ['POST'])]
-    #[IsGranted('ROLE_EDITOR')]
-    public function delete(Request $request, Article $article, ArticleRepository $articleRepository): RedirectResponse
-    {
-        if ($this->isCsrfTokenValid('delete' . $article->getId(), $request->request->get('_token'))) {
-            $articleRepository->remove($article, true);
-        }
-
-        return $this->redirectToRoute('article_index');
-    }
-
     #[Route('/art_price/', name: 'article_by_price', methods: ['GET','POST'])]
     public function articleByPrice(Request $request, ArticleRepository $articleRepository): Response
     {
@@ -117,5 +107,16 @@ class ArticleController extends AbstractController
             $articles = $articleRepository->findByPriceRange($minPrice, $maxPrice);
         }
         return $this->render('article/articleByPrice.html.twig', ['form' => $form->createView(), 'articles' => $articles]);
+    }
+
+    #[Route('/article/delete/{id}', name: 'article_delete', methods: ['POST'])]
+    #[IsGranted('ROLE_EDITOR')]
+    public function delete(Request $request, Article $article, ArticleRepository $articleRepository): RedirectResponse
+    {
+        if ($this->isCsrfTokenValid('delete' . $article->getId(), $request->request->get('_token'))) {
+            $articleRepository->remove($article, true);
+        }
+
+        return $this->redirectToRoute('article_index');
     }
 }

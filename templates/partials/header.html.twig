@@ -48,7 +48,7 @@
         {% if app.user %}
           <li class="nav-item dropdown ">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
-               aria-haspopup="true" aria-expanded="false">{{ app.user.username }}</a>
+               aria-haspopup="true" aria-expanded="false"><i class="bi bi-person"></i> {{ app.user.username }}</a>
             <div class="dropdown-menu">
               <a class="dropdown-item" href="#"><i class="bi bi-pencil"></i> Modifier mon profil</a>
               <a class="dropdown-item" href="{{ path('security_logout') }}"><i class="bi bi-box-arrow-left"></i> Déconnexion</a>
