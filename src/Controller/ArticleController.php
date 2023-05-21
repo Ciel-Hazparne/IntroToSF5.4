@@ -44,7 +44,7 @@ class ArticleController extends AbstractController
             }
         }
 
-        return $this->render('article/index.html.twig', ['form' => $form->createView(), 'articles' => $article]);
+        return $this->render('article/index.html.twig', ['current_menu' => 'articles', 'form' => $form->createView(), 'articles' => $article]);
     }
 
     #[Route('/article/new', name: 'article_new', methods: ['GET', 'POST'])]
@@ -67,7 +67,10 @@ class ArticleController extends AbstractController
 
             return $this->redirectToRoute('article_index');
         }
-        return $this->render('article/new.html.twig', ['form' => $form->createView()]);
+        return $this->render('article/new.html.twig', [
+            'current_menu' => 'articles',
+            'form' => $form->createView()
+        ]);
     }
 
     #[Route('/article/{id}', name: 'article_show', methods: ['GET'])]
@@ -93,7 +96,10 @@ class ArticleController extends AbstractController
             $this->addFlash('success', "L'article <strong>{$article->getName()}</strong> a bien été modifié");
             return $this->redirectToRoute('article_index');
         }
-        return $this->render('article/edit.html.twig', ['form' => $form->createView()]);
+        return $this->render('article/edit.html.twig', [
+            'current_menu' => 'articles',
+            'form' => $form->createView()
+        ]);
     }
 
     #[Route('/art_price/', name: 'article_by_price', methods: ['GET','POST'])]
@@ -108,7 +114,10 @@ class ArticleController extends AbstractController
             $maxPrice = $priceSearch->getMaxPrice();
             $articles = $articleRepository->findByPriceRange($minPrice, $maxPrice);
         }
-        return $this->render('article/articleByPrice.html.twig', ['form' => $form->createView(), 'articles' => $articles]);
+        return $this->render('article/articleByPrice.html.twig', [
+            'form' => $form->createView(),
+            'articles' => $articles
+        ]);
     }
 
     #[Route('/article/delete/{id}', name: 'article_delete', methods: ['POST'])]

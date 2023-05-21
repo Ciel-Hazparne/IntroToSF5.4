@@ -12,7 +12,7 @@ class HomeController extends AbstractController
     #[Route('/', name: 'home', methods: ['GET'])]
     public function home(): Response
     {
-        return $this->render('home/home.html.twig');
+        return $this->render('home/home.html.twig', ['current_menu' => 'home',]);
     }
 
 //    /**

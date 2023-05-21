@@ -16,6 +16,7 @@ class AdminController extends AbstractController
     public function userIndex(UserRepository $userRepository): Response
     {
         return $this->render("admin/userIndex.html.twig",[
+            'current_menu' => 'users',
             'users' => $userRepository->findAll()
         ]);
     }
@@ -29,6 +30,8 @@ class AdminController extends AbstractController
             $userRepository->save($user, true);
             return $this->redirectToRoute('admin_user_index');
         }
-        return $this->render('admin/userEdit.html.twig', ['formUser' => $form->createView()]);
+        return $this->render('admin/userEdit.html.twig', [
+            'current_menu' => 'users',
+            'formUser' => $form->createView()]);
     }
 }

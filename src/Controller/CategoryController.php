@@ -21,6 +21,7 @@ class CategoryController extends AbstractController
     public function index(CategoryRepository $categoryRepository): Response
     {
         return $this->render('category/index.html.twig', [
+            'current_menu' => 'categories',
             'categories' => $categoryRepository->findAll(),
         ]);
     }
@@ -39,7 +40,10 @@ class CategoryController extends AbstractController
 
             return $this->redirectToRoute('category_index');
         }
-        return $this->render('category/new.html.twig', ['form' => $form->createView()]);
+        return $this->render('category/new.html.twig', [
+            'current_menu' => 'categories',
+            'form' => $form->createView()
+        ]);
     }
 
     #[Route('/category/{id}', name: 'category_show', methods: ['GET'])]
@@ -57,7 +61,10 @@ class CategoryController extends AbstractController
             $categoryRepository->save($category, true);
             return $this->redirectToRoute('category_index');
         }
-        return $this->render('category/edit.html.twig', ['form' => $form->createView()]);
+        return $this->render('category/edit.html.twig', [
+            'current_menu' => 'categories',
+            'form' => $form->createView()
+        ]);
     }
 
     #[Route('/category/delete/{id}', name: 'category_delete', methods: ['POST'])]
@@ -85,6 +92,9 @@ class CategoryController extends AbstractController
                 $articles = $articleRepository->findAll();
             }
         }
-        return $this->render('article/articleInCategory.html.twig', ['form' => $form->createView(), 'articles' => $articles]);
+        return $this->render('article/articleInCategory.html.twig', [
+            'current_menu' => 'categories',
+            'form' => $form->createView(),
+            'articles' => $articles]);
     }
 }
