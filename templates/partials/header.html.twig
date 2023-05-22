@@ -17,6 +17,8 @@
             <a href="{{ path('article_index') }}" class="dropdown-item"><i class="bi bi-list-ul"></i> Liste des articles</a>
             {% if app.user %}
               <div class="dropdown-divider"></div>
+              <a href="{{ path('cart_index') }}" class="dropdown-item"><i class="bi bi-card-list"></i> Ma liste</a>
+              <div class="dropdown-divider"></div>
               <a href="{{ path('article_new') }}" class="dropdown-item"><i class="bi bi-file-plus"></i> Ajouter un article</a>
             {% endif %}
             <div class="dropdown-divider"></div>
