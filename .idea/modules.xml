@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/IntroToSf5.4.iml" filepath="$PROJECT_DIR$/.idea/IntroToSf5.4.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../api_maraichage/.idea/api_maraichage.iml" filepath="$PROJECT_DIR$/../api_maraichage/.idea/api_maraichage.iml" />
     </modules>
   </component>
 </project>
