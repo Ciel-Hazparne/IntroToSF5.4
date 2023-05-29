@@ -6,9 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 class CategorySearch
 {
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category")
-     */
+
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\Category')]
     private $category;
 
     public function getCategory(): ?Category

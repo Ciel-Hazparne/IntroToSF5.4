@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Relevés mesures{% endblock %}
+        {% block stylesheets %}
+          {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+
+{% block body %}
+  <div class="alert alert-dismissible alert-secondary mt-5">
+    <h4>Recherche de mesures comprises entre les deux dates</h4>
+    <div class="form-row align-items-end">
+        <div class="col">
+        <form role="form" method="get">
+        <label for="InputDate" class="form-label mt-4">Date début</label>
+
+          <input type="date" id="minDate" name="minDate" class="form-control ">
+          </div>
+      <div class="col">
+        <label for="InputDate" class="form-label mt-4">Date fin</label>
+          <input type="date" name="maxDate" class="form-control" id="maxDate">
+          </div>
+      <div class="col">
+          <button type="submit" name="submit" class="btn btn-success">Afficher</button>
+          <a href="{{ path('measures') }}" class="btn btn-info">Réinitialiser</a>
+        </div>
+    </div>
+  </div>
+  <div class="row mb-3 mt-5">
+    <div class="col example-wrapper">
+      {{ render_chart(chart1) }}  {#ajout du graphique chart1#}
+    </div>
+    <div class="col example-wrapper">
+      {{ render_chart(chart2) }}  {#ajout du graphique chart2#}
+    </div>
+  </div>
+  <br>
+  <div class="container">
+  <div class="row mb-3 mt-5">
+    <div class="col example-wrapper">
+      {{ render_chart(chart3) }}  {#ajout du graphique chart3#}
+    </div>
+    <div class="col example-wrapper">
+      {{ render_chart(chart4) }} {# ajout du graphique chart4 #}
+    </div>
+  </div>
+{% endblock %}

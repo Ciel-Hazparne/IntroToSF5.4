@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Liste des mesures par date{% endblock %}
+
+{% block body %}
+  <div class="container">
+    {{ form_start(form) }}
+    <div class="form-row align-items-end">
+      <div class="col"> {{ form_row(form.minDate) }} </div>
+      <div class="col"> {{ form_row(form.maxDate) }} </div>
+      <div class="col">
+        <div class="form-group">
+          <button type="submit" class="btn btn-success">Rechercher</button>
+        </div>
+      </div>
+    </div>
+    {{ form_end(form) }}
+{#    <table id="mesures" class="table table-striped">
+      <thead>
+      <tr>
+        <th>Libellé</th>
+        <th>Date</th>
+        <th>Valeur</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for measure in measures %}
+        <tr>
+          <td>{{ measure.libelle }}</td>
+          <td>{{ measure.createdAt |date('Y-m-d') }}</td>
+          <td>{{ measure.valeur }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>#}
+{% endblock %}

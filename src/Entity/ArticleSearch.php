@@ -4,7 +4,7 @@ namespace App\Entity;
 
 class ArticleSearch
 {
-    private $name;
+    private ?string $name;
 
     public function getName(): ?string
     {
