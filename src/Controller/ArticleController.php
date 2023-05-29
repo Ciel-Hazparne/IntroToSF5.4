@@ -9,6 +9,7 @@ use App\Form\ArticleSearchType;
 use App\Form\ArticleType;
 use App\Form\PriceSearchType;
 use App\Repository\ArticleRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,9 +23,13 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class ArticleController extends AbstractController
 {
     #[Route('/article', name: 'article_index', methods: ['GET', 'POST'])]
-    public function index(Request $request, ArticleRepository $articleRepository): Response
+    public function index(PaginatorInterface $paginator, Request $request, ArticleRepository $articleRepository): Response
     {
-        $article = $articleRepository->findAll();
+//        $article = $articleRepository->findAll();
+        $article = $paginator->paginate($articleRepository->findAll(),
+            $request->query->getInt('page', 1), // on démarre à la page 1
+            3 // on ne veut afficher que 3 articles/page
+        );
 
         $propertySearch = new ArticleSearch();
         $form = $this->createForm(ArticleSearchType::class, $propertySearch);
@@ -38,9 +43,6 @@ class ArticleController extends AbstractController
             {
                 $articleSearch = $articleRepository->findBy(['name' => $name]);
                 return $this->render('article/indexSearch.html.twig', ['articles' => $articleSearch]);
-            } else //si si aucun nom n'est fourni on affiche tous les articles
-            {
-                $article = $articleRepository->findAll();
             }
         }
 

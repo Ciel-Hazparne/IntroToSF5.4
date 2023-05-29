@@ -57,4 +57,7 @@
   {% else %}
     <p>Aucun article</p>
   {% endif %}
+  <div class="pagination">
+    {{ knp_pagination_render(articles) }}
+  </div>
 {% endblock %}
