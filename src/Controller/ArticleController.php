@@ -26,6 +26,7 @@ class ArticleController extends AbstractController
     public function index(PaginatorInterface $paginator, Request $request, ArticleRepository $articleRepository): Response
     {
 //        $article = $articleRepository->findAll();
+//        dd($article);
         $article = $paginator->paginate($articleRepository->findAll(),
             $request->query->getInt('page', 1), // on démarre à la page 1
             3 // on ne veut afficher que 3 articles/page

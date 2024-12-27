@@ -3,7 +3,11 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/IntroToSf5.4.iml" filepath="$PROJECT_DIR$/.idea/IntroToSf5.4.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../PHP Procédural/PhpCliGui/.idea/PhpCliGui.iml" filepath="$PROJECT_DIR$/../../PHP Procédural/PhpCliGui/.idea/PhpCliGui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Test/.idea/Test.iml" filepath="$PROJECT_DIR$/../Test/.idea/Test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../acces-gsm/.idea/acces-gsm.iml" filepath="$PROJECT_DIR$/../acces-gsm/.idea/acces-gsm.iml" />
       <module fileurl="file://$PROJECT_DIR$/../api_maraichage/.idea/api_maraichage.iml" filepath="$PROJECT_DIR$/../api_maraichage/.idea/api_maraichage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../comprimeuse_pdo/.idea/comprimeuse_pdo.iml" filepath="$PROJECT_DIR$/../comprimeuse_pdo/.idea/comprimeuse_pdo.iml" />
     </modules>
   </component>
 </project>
