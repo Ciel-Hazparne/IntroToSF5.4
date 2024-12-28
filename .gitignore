@@ -1,6 +1,5 @@
 
 ###> symfony/framework-bundle ###
-/.idea
 /.env
 /.env.test
 /.env.local
@@ -11,6 +10,9 @@
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
+
+###> PhpStorm ###
+.idea/
 
 ###> phpunit/phpunit ###
 /phpunit.xml
